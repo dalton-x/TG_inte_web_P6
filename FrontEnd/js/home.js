@@ -1,5 +1,6 @@
 // Permet de la ncer la fonction pour avoir tout les projets au chargement de la page
 document.addEventListener("DOMContentLoaded", function () {
+  getUserLogged()
   getAllCategories();
   getAllWorks(0);
 });
@@ -50,7 +51,7 @@ async function getAllWorks(idCategory = 0) {
 }
 
 function updateBadge(idCategory) {
-  const badges = document.querySelectorAll('.badge');
+  const badges = document.querySelectorAll('#filters .badge');
   [...badges].map((badge) => {
     badge.classList.remove('selected');
     if (badge.classList.contains(idCategory)) {
@@ -86,4 +87,53 @@ async function getAllCategories() {
   elements.forEach((element) => {
     filters.appendChild(element);
   });
+}
+
+function getUserLogged() {
+  if (sessionStorage.getItem('token') != null) {
+    const btnModifier = document.getElementById('modifier');
+    btnModifier.classList.remove('display-none');
+    btnModifier.addEventListener('click', function() {
+      openModdalUpdate()
+    });
+  }
+}
+
+async function openModdalUpdate() {
+  const works = await fetchRequest("works/");
+  const projets = document.getElementById("listeProjets")
+  document.querySelector("#listeProjets").innerHTML = "";
+  works.map((work) => {
+    const workItem = document.createElement("div");
+    workItem.classList.add("grid-item");
+    // Create image tag
+    const img = document.createElement("img");
+    img.src = work.imageUrl;
+    img.alt = work.title;
+    workItem.appendChild(img);
+    // Create trash
+    const trash = document.createElement("div");
+    trash.classList.add("trash");
+    const fontTrash = document.createElement("i");
+    fontTrash.classList.add("fa-solid");
+    fontTrash.classList.add("fa-trash-can");
+    trash.appendChild(fontTrash);
+    workItem.appendChild(trash);
+    projets.appendChild(workItem);
+  })
+  openModal()
+}
+
+
+// Gestion de la moadl pour la mise a jour des projets
+// Pour fermer la modal
+function closeModal(){
+  document.getElementById("modal-container").style.display = "none";
+  document.body.style.overflow = "auto";
+}
+
+function openModal() {
+  document.getElementById("modal-container").style.display = "block";
+  document.body.style.overflow = "hidden";
+
 }
