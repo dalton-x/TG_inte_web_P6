@@ -24,7 +24,11 @@
           <li>
             <a href="#contact" onclick="scrollToAnchor(event, 'contact')">Contact</a>
           </li>
-          <li>login</li>
+          <li>
+            <a href="./login.html">
+              Login
+            </a>
+          </li>
           <li><img src="./assets/icons/instagram.png" alt="Instagram" /></li>
         </ul>
       </nav>
@@ -52,8 +56,9 @@
       </section>
       <section id="portfolio">
         <h2>Mes Projets</h2>
+        <div id="filters">
+        </div>
         <div class="gallery">
-          
         </div>
       </section>
       <section id="contact">
@@ -80,42 +85,7 @@
     </footer>
 
     <script src="./js/variables.js"></script>
+    <script src="./js/commun.js"></script>
     <script src="./js/home.js"></script>
-    <script>
-      function scrollToAnchor(event, anchorId) {
-        event.preventDefault(); // Empêche le comportement de lien par défaut
-
-        const targetElement = document.getElementById(anchorId);
-        const targetOffset = targetElement.offsetTop;
-        const duration = 800; // Durée de l'animation en millisecondes
-        const startOffset = window.pageYOffset;
-        const distance = targetOffset - startOffset;
-        let startTime = null;
-
-        function scrollAnimation(currentTime) {
-          if (startTime === null) {
-            startTime = currentTime;
-          }
-
-          const elapsedTime = currentTime - startTime;
-          const scrollProgress = Math.min(elapsedTime / duration, 1);
-          const easing = easeInOutQuad(scrollProgress);
-          const scrollTo = startOffset + distance * easing;
-
-          window.scrollTo(0, scrollTo);
-
-          if (scrollProgress < 1) {
-            window.requestAnimationFrame(scrollAnimation);
-          }
-        }
-
-        window.requestAnimationFrame(scrollAnimation);
-      }
-
-      // Fonction d'interpolation pour l'effet de défilement
-      function easeInOutQuad(progress) {
-        return progress < 0.5 ? 2 * progress * progress : -1 + (4 - 2 * progress) * progress;
-      }
-    </script>
   </body>
 </html>
