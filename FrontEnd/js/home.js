@@ -29,7 +29,7 @@ function createWork(work){
 async function getAllWorks(idCategory = 0) {
   // API request to retrieve objects
   try {
-    const works = await fecthRequest("works/");
+    const works = await fetchRequest("works/");
     // Retrieve the location for the gallery objects
     const gallery = document.querySelector("#portfolio .gallery");
     updateBadge(idCategory);
@@ -60,7 +60,7 @@ function updateBadge(idCategory) {
 }
 
 async function getAllCategories() {
-  const categories = await fecthRequest("categories/");
+  const categories = await fetchRequest("categories/");
   const filters = document.getElementById('filters');
   // Create a badge for all and assign it id 0
   const tousBadge = document.createElement("div");

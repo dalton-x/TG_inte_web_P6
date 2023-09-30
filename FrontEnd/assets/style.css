@@ -222,3 +222,131 @@ footer nav ul {
 	background-color: var(--filtersColor);
 	color:white;
 }
+
+
+/* Login */
+
+li.selected-link {
+	font-weight: 900;
+}
+
+main.main-login {
+	width: 379px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+h2.login {
+	font-family: Syne;
+	color: var(--filtersColor);
+	text-align: center;
+	margin-top: 20vh;
+	margin-bottom: 8vh;
+}
+
+.errorLogin {
+	text-align: center;
+	color: red;
+	font-weight: 900;
+}
+
+.display-none {
+	display: none;
+}
+
+form.loginForm {
+	position: relative;
+	display: contents;
+	width: 50%;
+}
+
+form>.form-group{
+	margin-top: 5vh;
+	max-width: 379px;
+	position: relative;
+	display: contents;
+}
+
+.form-group {
+	text-align: center;
+	display: grid;
+	grid-template-columns: auto 1fr;
+	grid-gap: 10px;
+	align-items: center;
+}
+
+.form-label {
+	margin-top: 2vh;
+	grid-column: 1 / 2;
+    text-align: left;
+}
+
+.form-input {
+	grid-column: 2 / 3;
+}
+
+.form-label label {
+	color: #3D3D3D;
+	font-family: "Work Sans";
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: normal;
+}
+
+.form-group input {
+	display: flex;
+	min-width: 100%;
+	width: 379px;
+	height: 51px;
+	flex-shrink: 0;
+	background: #FFF;
+	box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
+	border-style: none;
+}
+
+.form-submit {
+	margin-top: 5vh;
+}
+
+.form-submit button {
+	display: flex;
+	align-items: center;
+  padding: 5px 20px;
+  border: 1px solid var(--filtersColor);
+  border-radius: 60px;
+	height: 37px;
+	text-align: center;
+	font-family: Syne;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
+	cursor: pointer;
+	background-color: var(--filtersColor);
+	color:white;	
+	margin-left: auto;
+	margin-right: auto;
+}
+.link-forgot-password {
+	margin-top: 3vh;
+}
+
+.link-forgot-password>a {
+	color: #3D3D3D;
+	font-family: Work Sans;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: normal;
+	text-decoration-line: underline;
+}
+
+
+#footer-login {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+	cursor: pointer;
+}

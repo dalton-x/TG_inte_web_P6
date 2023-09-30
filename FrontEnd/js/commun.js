@@ -1,7 +1,15 @@
 // function for request api
-async function fecthRequest(api, args = '') {
+async function fetchRequest(api, args = '', params = {}) {
   try {
-    const response = await fetch(URLDB + api + args);
+    const { method = 'GET', body } = params;
+    const requestOptions = {
+      method,
+      body: body,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    const response = await fetch(URLDB + api + args, requestOptions);
     const data = await response.json();
     return data;
   } catch (error) {
