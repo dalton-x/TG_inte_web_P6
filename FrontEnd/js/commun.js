@@ -2,11 +2,13 @@
 async function fetchRequest(api, args = '', params = {}) {
   try {
     const { method = 'GET', body } = params;
+    const token = sessionStorage.getItem('token');
     const requestOptions = {
       method,
       body: body,
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       }
     };
     const response = await fetch(URLDB + api + args, requestOptions);

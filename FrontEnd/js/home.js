@@ -1,4 +1,4 @@
-// Permet de la ncer la fonction pour avoir tout les projets au chargement de la page
+// Launch the function to display all projects when the page is loaded
 document.addEventListener("DOMContentLoaded", function () {
   getUserLogged()
   getAllCategories();
@@ -60,7 +60,7 @@ function updateBadge(idCategory) {
   });
 }
 
-async function getAllCategories() {
+async function getAllCategories(select = false) {
   const categories = await fetchRequest("categories/");
   const filters = document.getElementById('filters');
   // Create a badge for all and assign it id 0
@@ -70,23 +70,43 @@ async function getAllCategories() {
   tousBadge.addEventListener('click', function() {
     getAllWorks(0);
   });
-  // Create other badges according to the database
-  const elements = categories.map((category) => {
-    const badge = document.createElement("div");
-    badge.innerHTML = category.name;
-    badge.className = 'badge '+category.id;
-    badge.addEventListener('click', function() {
-      getAllWorks(category.id);
-    });
-    return badge;
-  });
-  // Add the Tous badge at the beginning of the list to put it first
-  elements.unshift(tousBadge);
 
-  // Add badges to filters element
-  elements.forEach((element) => {
-    filters.appendChild(element);
-  });
+  if (!select) {
+    // Create other badges according to the database
+    const elements = categories.map((category) => {
+      const badge = document.createElement("div");
+      badge.innerHTML = category.name;
+      badge.className = 'badge '+category.id;
+      badge.addEventListener('click', function() {
+        getAllWorks(category.id);
+      });
+      return badge;
+    });
+    // Add the Tous badge at the beginning of the list to put it first
+    elements.unshift(tousBadge);
+  
+    // Add badges to filters element
+    elements.forEach((element) => {
+      filters.appendChild(element);
+    });
+  } else {
+    // Category management for the add new image selector
+    const selectNewImage = document.getElementById('category'); 
+    const options = categories.map((category) => {
+      const option = document.createElement("option");
+      option.value = category.id;
+      option.text = category.name;
+      return option;
+    });
+
+    // Add options to selectNewImage element
+    options.forEach((option) => {
+      // Check if the value already exists
+      if (!selectNewImage.querySelector(`[value="${option.value}"]`)) {
+        selectNewImage.appendChild(option);
+      }
+    });
+  }
 }
 
 function getUserLogged() {
@@ -94,12 +114,12 @@ function getUserLogged() {
     const btnModifier = document.getElementById('modifier');
     btnModifier.classList.remove('display-none');
     btnModifier.addEventListener('click', function() {
-      openModdalUpdate()
+      openModalUpdate()
     });
   }
 }
 
-async function openModdalUpdate() {
+async function openModalUpdate() {
   const works = await fetchRequest("works/");
   const projets = document.getElementById("listeProjets")
   document.querySelector("#listeProjets").innerHTML = "";
@@ -114,6 +134,9 @@ async function openModdalUpdate() {
     // Create trash
     const trash = document.createElement("div");
     trash.classList.add("trash");
+    trash.addEventListener('click', function() {
+      deleteWorkById(work.id);
+    });
     const fontTrash = document.createElement("i");
     fontTrash.classList.add("fa-solid");
     fontTrash.classList.add("fa-trash-can");
@@ -124,16 +147,12 @@ async function openModdalUpdate() {
   openModal()
 }
 
+async function deleteWorkById(idWork) {
 
-// Gestion de la moadl pour la mise a jour des projets
-// Pour fermer la modal
-function closeModal(){
-  document.getElementById("modal-container").style.display = "none";
-  document.body.style.overflow = "auto";
-}
-
-function openModal() {
-  document.getElementById("modal-container").style.display = "block";
-  document.body.style.overflow = "hidden";
-
+  const token  = sessionStorage.getItem('token');
+  console.log(token);
+  let params = {
+    method: 'DELETE'
+  }
+  await fetchRequest("works/",idWork, params);
 }

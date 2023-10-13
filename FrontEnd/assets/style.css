@@ -388,15 +388,23 @@ form>.form-group{
 	border-radius: 10px;
 }
 
-.close {
+.close, .return {
   color: #aaa;
   float: right;
   font-size: 28px;
   font-weight: bold;
 }
+.close {
+  float: right;
+}
+.return {
+  float: left;
+}
 
 .close:hover,
-.close:focus {
+.close:focus,
+.return:hover,
+.return:focus {
   color: black;
   text-decoration: none;
   cursor: pointer;
@@ -420,7 +428,7 @@ form>.form-group{
 
 .grid-item {
 	display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 	margin: 10px;
 }
@@ -434,9 +442,75 @@ form>.form-group{
 	background-color: #000;
 	color: #FFF;
 	position: relative;
-  top: -40px;
-  right: 22px;
+  top: 5px;
+  right: 27px;
   padding: 5px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.container-upload-image{
+	width: 420px;
+	height: 169px;
+	background-color: #E8F1F6;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 6vh;
+}
+
+.logo-upload {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* height: 100vh; Ajustez la hauteur en fonction de vos besoins */
+}
+
+.logo-upload>img {
+	width: 129px;
+	height: auto;
+}
+
+.logo-upload>.fa-image{
+	color: #B9C5CC;
+	margin-top: 3vh;
+}
+
+.file-input {
+  display: inline-block;
+  position: relative;
+}
+
+.input-file {
+  display: none;
+}
+
+.file-label {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #CBD6DC;
+  border-radius: 20px;
+  cursor: pointer;
+	margin-left: 33%;
+}
+
+.file-text {
+  font-size: 14px;
+  color: #306685;
+	text-align: center;
+	font-family: Work Sans;
+	font-style: normal;
+	font-weight: 500;
+	line-height: normal;
+}
+
+.text-file-mime {
+	color: #444;
+	text-align: center;
+	font-family: Work Sans;
+	font-size: 10px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
 }
 
 .modal-footer {
