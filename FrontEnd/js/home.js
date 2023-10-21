@@ -154,5 +154,5 @@ async function deleteWorkById(idWork) {
   let params = {
     method: 'DELETE'
   }
-  await fetchRequest("works/",idWork, params);
+  await fetchRequest("works/"+idWork, params);
 }

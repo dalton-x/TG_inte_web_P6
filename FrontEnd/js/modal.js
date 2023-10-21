@@ -13,21 +13,24 @@ let templateFormNewImage =
 '    <div class="text-file-mime" id="typeMime">jpg, png : 4mo max</div>'+
 '  </div>'+
 '  <div id="formNewImage">'+
-'    <div class="form-group">'+
-'      <div class="form-label">'+
-'        <label for="title">Titre</label>'+
-'      </div>'+
-'      <div class="form-input">'+
-'        <input type="text" name="title" id="title" />'+
-'      </div>'+
-'      <div class="form-label">'+
-'        <label for="category">Catégorie</label>'+
-'      </div>'+
-'      <div class="form-input">'+
-'        <select name="category" id="category">'+
-'        </select>'+
-'      </div>'+
-'    </div>'+
+'    <form>'+
+'     <div class="form-group-new-image">'+
+'       <div class="form-label">'+
+'         <label for="title">Titre</label>'+
+'       </div>'+
+'       <div class="form-input">'+
+'         <input type="text" name="title" id="title" />'+
+'       </div>'+
+'       <div class="form-label">'+
+'         <label for="category">Catégorie</label>'+
+'       </div>'+
+'       <div class="form-input">'+
+'         <select name="category" id="category">'+
+'           <option value="">Choisir un categorie</option>'+
+'         </select>'+
+'       </div>'+
+'     </div>'+
+'    </form>'+
 '  </div>'+
 '</span>';
 document.addEventListener("DOMContentLoaded", function () {

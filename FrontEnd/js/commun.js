@@ -1,17 +1,15 @@
 // function for request api
-async function fetchRequest(api, args = '', params = {}) {
+async function fetchRequest(api, params = {}) {
   try {
-    const { method = 'GET', body } = params;
     const token = sessionStorage.getItem('token');
     const requestOptions = {
-      method,
-      body: body,
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      }
-    };
-    const response = await fetch(URLDB + api + args, requestOptions);
+        method:params.method,
+        body: params.body,
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      };
+    const response = await fetch(URLDB + api, requestOptions);
     const data = await response.json();
     return data;
   } catch (error) {

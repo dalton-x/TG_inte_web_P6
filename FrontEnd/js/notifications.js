@@ -10,15 +10,14 @@ function createNotification(message, type) {
   container.appendChild(notification);
 
   // Supprimer la notification après quelques secondes
-  // setTimeout(() => {
-  //   closeNotification()
-  //   container.removeChild(notification);
-  // }, 3000); // Durée en millisecondes
+  setTimeout(() => {
+    closeNotification()
+    container.removeChild(notification);
+  }, 3000);
 }
 
 // Ouvrir le modal
 function openNotifications(message, type) {
-  console.log(message, type);
   createNotification(message, type);
   const modal = document.getElementById('modal-notifications-container');
   modal.style.display = 'block';
