@@ -6,7 +6,7 @@ function createNotification(message, type, callback = null) {
   notification.innerHTML = message;
 
   // Ajouter les boutons OK et Annuler uniquement si un rappel est fourni
-  if (callback) {
+  if (callback != null) {
     const okButton = document.getElementById('modal-close-button-ok');
     okButton.addEventListener('click', () => {
       closeNotification();
@@ -35,7 +35,7 @@ function createNotification(message, type, callback = null) {
   container.appendChild(notification);
 
   // Supprimer la notification après quelques secondes si aucun rappel n'est fourni
-  if (!callback) {
+  if (callback == null) {
     setTimeout(() => {
       closeNotification();
       (container.innerText != '') ? container.removeChild(notification) : '';
