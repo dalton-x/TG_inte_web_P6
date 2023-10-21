@@ -1,19 +1,19 @@
 // function for request api
 async function fetchRequest(api, params = {}) {
   try {
+    const { method = 'GET', body } = params;
     const token = sessionStorage.getItem('token');
-    let requestOptions = {
-      method:params.method,
+    const requestOptions = {
+      method: method,
+      body: body,
       headers: {
-        'Authorization': `Bearer ${token}`,
-        'accept': '*/*'
+        "Accept" : 'application/json', 
+        "Authorization" : `Bearer ${token}`
       }
     };
-    if (params.body != undefined) {
-      requestOptions.body = params.body;
-    }
-    const response = await fetch(URLDB + api, requestOptions);
-    return response.json();
+    const response = await fetch(URLDB + api , requestOptions);
+    const data = await response.json();
+    return data;
   } catch (error) {
     console.error(error);
     throw error;

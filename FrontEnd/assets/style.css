@@ -71,6 +71,10 @@ h1{
 	color: #B1663C
 }
 
+.text-decoration-none {
+	text-decoration: none;
+}
+
 h1 > span {
 	font-family: 'Work Sans';
 	font-size:10px;
@@ -444,11 +448,15 @@ form>.form-group , form>.form-group-new-image{
   align-items: flex-start;
   justify-content: center;
 	margin: 10px;
+	height: 104px;
+  width: 78px;
+  overflow: hidden;
 }
 
 .grid-item img {
-  height: 104px;
-	width: auto;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
 }
 
 .trash {
