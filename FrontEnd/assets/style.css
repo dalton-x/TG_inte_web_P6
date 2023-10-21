@@ -271,14 +271,14 @@ form.loginForm {
 	width: 50%;
 }
 
-form>.form-group{
+form>.form-group , form>.form-group-new-image{
 	margin-top: 5vh;
 	max-width: 379px;
 	position: relative;
 	display: contents;
 }
 
-.form-group {
+.form-group, .form-group-new-image {
 	text-align: center;
 	display: grid;
 	grid-template-columns: auto 1fr;
@@ -289,14 +289,14 @@ form>.form-group{
 .form-label {
 	margin-top: 2vh;
 	grid-column: 1 / 2;
-    text-align: left;
+  text-align: left;
 }
 
 .form-input {
 	grid-column: 2 / 3;
 }
 
-.form-label label {
+.form-label label, .form-group-new-image label {
 	color: #3D3D3D;
 	font-family: "Work Sans";
 	font-size: 14px;
@@ -305,7 +305,7 @@ form>.form-group{
 	line-height: normal;
 }
 
-.form-group input {
+.form-group input, .form-group-new-image input, .form-group-new-image select {
 	display: flex;
 	min-width: 100%;
 	width: 379px;
@@ -314,6 +314,19 @@ form>.form-group{
 	background: #FFF;
 	box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
 	border-style: none;
+}
+
+.form-group-new-image {
+	display: block;
+}
+
+.form-group-new-image option {
+	color: #444;
+	font-family: Work Sans;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: normal;
 }
 
 .form-submit {
@@ -450,19 +463,15 @@ form>.form-group{
 }
 
 .container-upload-image{
-	width: 420px;
 	height: 169px;
 	background-color: #E8F1F6;
-	margin-left: auto;
-	margin-right: auto;
 	margin-top: 6vh;
 }
 
-.logo-upload {
+.logo-upload, .input-upload {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* height: 100vh; Ajustez la hauteur en fonction de vos besoins */
 }
 
 .logo-upload>img {
@@ -490,7 +499,6 @@ form>.form-group{
   background-color: #CBD6DC;
   border-radius: 20px;
   cursor: pointer;
-	margin-left: 33%;
 }
 
 .file-text {

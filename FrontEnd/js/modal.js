@@ -1,35 +1,38 @@
-let templateFormNewImage = 
-'<span id="templateFormNewImage">'+
-'  <div class="container-upload-image" id="contenuTemplate">'+
-'    <div class="logo-upload" id="logo">'+
-'      <i class="fa-regular fa-image fa-6x"></i>'+
-'    </div>'+
-'    <div class="input-upload">'+
-'      <input type="file" id="upload" onInput="insertThumbnail(event)" class="input-file" />'+
-'      <label for="upload" class="file-label">'+
-'        <span class="file-text">+ Ajouter photo</span>'+
-'      </label>'+
-'    </div>'+
-'    <div class="text-file-mime" id="typeMime">jpg, png : 4mo max</div>'+
-'  </div>'+
-'  <div id="formNewImage">'+
-'    <div class="form-group">'+
-'      <div class="form-label">'+
-'        <label for="title">Titre</label>'+
-'      </div>'+
-'      <div class="form-input">'+
-'        <input type="text" name="title" id="title" />'+
-'      </div>'+
-'      <div class="form-label">'+
-'        <label for="category">Catégorie</label>'+
-'      </div>'+
-'      <div class="form-input">'+
-'        <select name="category" id="category">'+
-'        </select>'+
-'      </div>'+
-'    </div>'+
-'  </div>'+
-'</span>';
+let templateFormNewImage =  '<span id="templateFormNewImage">'+
+                            '  <div class="container-upload-image" id="contenuTemplate">'+
+                            '    <div class="logo-upload" id="logo">'+
+                            '      <i class="fa-regular fa-image fa-6x"></i>'+
+                            '    </div>'+
+                            '    <div class="input-upload">'+
+                            '      <input type="file" id="upload" onInput="insertThumbnail(event)" class="input-file" />'+
+                            '      <label for="upload" class="file-label">'+
+                            '        <span class="file-text">+ Ajouter photo</span>'+
+                            '      </label>'+
+                            '    </div>'+
+                            '    <div class="text-file-mime" id="typeMime">jpg, png : 4mo max</div>'+
+                            '  </div>'+
+                            '  <div id="formNewImage">'+
+                            '    <form>'+
+                            '     <div class="form-group-new-image">'+
+                            '       <div class="form-label">'+
+                            '         <label for="title">Titre</label>'+
+                            '       </div>'+
+                            '       <div class="form-input">'+
+                            '         <input type="text" name="title" id="title" />'+
+                            '       </div>'+
+                            '       <div class="form-label">'+
+                            '         <label for="category">Catégorie</label>'+
+                            '       </div>'+
+                            '       <div class="form-input">'+
+                            '         <select name="category" id="category">'+
+                            '           <option value="">Choisir un categorie</option>'+
+                            '         </select>'+
+                            '       </div>'+
+                            '     </div>'+
+                            '    </form>'+
+                            '  </div>'+
+                            '</span>';
+
 document.addEventListener("DOMContentLoaded", function () {
   btnAddImage();
   btnReturn();
@@ -43,18 +46,17 @@ function btnAddImage() {
   document.getElementById("btnAddImage").addEventListener("click", function() {
     document.getElementById("projets").style.display = "none";
     document.getElementById("ajoutProjet").style.display = "block";
+    getAllCategories(true);
   })
 }
 
 function btnReturn() {
-  // document.getElementById("btnReturn").addEventListener("click", function() {
-    document.getElementById("projets").style.display = "block";
-    document.getElementById("ajoutProjet").style.display = "none";
-  // });
+  document.getElementById("projets").style.display = "block";
+  document.getElementById("ajoutProjet").style.display = "none";
   let modalBody = document.getElementById('modalBodyTemplate');
   modalBody.innerHTML = '';
   modalBody.innerHTML = templateFormNewImage;
-  getAllCategories(true)
+  openModalUpdate()
 }
 
 // Gestion de la miniature
@@ -82,7 +84,6 @@ function insertThumbnail(event){
       typeMime.style.display = 'none';
     } else {
       event.target.files[0] = {};
-      // event.target.files[0].type
       openNotifications('Fichier non valide', 'error');
     }
   }

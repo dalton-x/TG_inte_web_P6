@@ -19,7 +19,7 @@ submitButton.addEventListener("click", function(event) {
 
 
 async function getUserData(params) {
-  let user = await fetchRequest("users/login",'',params)
+  let user = await fetchRequest("users/login",params)
   if (user.token != undefined) {
     sessionStorage.setItem('token', user.token);
     location.href = './index.html';

@@ -30,7 +30,7 @@ function createWork(work){
 async function getAllWorks(idCategory = 0) {
   // API request to retrieve objects
   try {
-    const works = await fetchRequest("works/");
+    const works = await fetchRequest("works/",{method:'GET'});
     // Retrieve the location for the gallery objects
     const gallery = document.querySelector("#portfolio .gallery");
     updateBadge(idCategory);
@@ -61,7 +61,7 @@ function updateBadge(idCategory) {
 }
 
 async function getAllCategories(select = false) {
-  const categories = await fetchRequest("categories/");
+  const categories = await fetchRequest("categories/",{method:'GET'});
   const filters = document.getElementById('filters');
   // Create a badge for all and assign it id 0
   const tousBadge = document.createElement("div");
@@ -115,12 +115,13 @@ function getUserLogged() {
     btnModifier.classList.remove('display-none');
     btnModifier.addEventListener('click', function() {
       openModalUpdate()
+      openModal()
     });
   }
 }
 
 async function openModalUpdate() {
-  const works = await fetchRequest("works/");
+  const works = await fetchRequest("works/",{method:'GET'});
   const projets = document.getElementById("listeProjets")
   document.querySelector("#listeProjets").innerHTML = "";
   works.map((work) => {
@@ -144,15 +145,18 @@ async function openModalUpdate() {
     workItem.appendChild(trash);
     projets.appendChild(workItem);
   })
-  openModal()
 }
 
-async function deleteWorkById(idWork) {
+function deleteWorkById(idWork) {
 
-  const token  = sessionStorage.getItem('token');
-  console.log(token);
-  let params = {
-    method: 'DELETE'
-  }
-  await fetchRequest("works/",idWork, params);
+  openNotifications('Etes vous sûr de vouloir supprimer ce projet ?', 'info', async function(result) {
+    if (result) {
+      // Le bouton OK a été cliqué
+      let params = {
+        method: 'DELETE',
+      }
+      await fetchRequest("works/"+idWork, params);
+      openModalUpdate()
+    }
+  });
 }
