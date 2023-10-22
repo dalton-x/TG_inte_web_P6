@@ -30,10 +30,12 @@ function createWork(work){
 async function getAllWorks(idCategory = 0) {
   // API request to retrieve objects
   try {
-    const works = await fetchRequest("works/",{method:'GET'});
     // Retrieve the location for the gallery objects
     const gallery = document.querySelector("#portfolio .gallery");
     updateBadge(idCategory);
+    
+    gallery.innerHTML = "";
+    const works = await fetchRequest("works/",{method:'GET'});
 
     // Loop over the list of objects
     const elements = (idCategory === 0 ? works : works.filter((work) => work.category.id === idCategory))
@@ -63,17 +65,19 @@ function updateBadge(idCategory) {
 async function getAllCategories(select = false) {
   const categories = await fetchRequest("categories/",{method:'GET'});
   const filters = document.getElementById('filters');
+  // Clear all filters
+  filters.innerHTML = "";
   // Create a badge for all and assign it id 0
-  const tousBadge = document.createElement("div");
-  tousBadge.innerHTML = "Tous";
-  tousBadge.className = 'badge selected 0';
-  tousBadge.addEventListener('click', function() {
+  const allBadges = document.createElement("div");
+  allBadges.innerHTML = "Tous";
+  allBadges.className = 'badge selected 0';
+  allBadges.addEventListener('click', function() {
     getAllWorks(0);
   });
 
   if (!select) {
     // Create other badges according to the database
-    const elements = categories.map((category) => {
+    const badges = categories.map((category) => {
       const badge = document.createElement("div");
       badge.innerHTML = category.name;
       badge.className = 'badge '+category.id;
@@ -83,11 +87,19 @@ async function getAllCategories(select = false) {
       return badge;
     });
     // Add the Tous badge at the beginning of the list to put it first
-    elements.unshift(tousBadge);
+    badges.unshift(allBadges);
+
+    const works = await fetchRequest("works/",{method:'GET'});
   
-    // Add badges to filters element
-    elements.forEach((element) => {
-      filters.appendChild(element);
+    // Add badges to filters element only if works in category
+    badges.forEach((badge) => {
+      const matchingWorks = works.filter((work) => {
+        return badge.classList.contains(work.categoryId.toString()) || badge.classList.contains("0");
+      });
+    
+      if (matchingWorks.length > 0) {
+        filters.appendChild(badge);
+      }
     });
   } else {
     // Category management for the add new image selector
