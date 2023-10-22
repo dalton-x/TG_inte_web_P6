@@ -96,6 +96,8 @@ function closeModal(){
   document.body.style.overflow = "auto";
   document.getElementById("projets").style.display = "block";
   document.getElementById("ajoutProjet").style.display = "none";
+  getAllCategories()
+  getAllWorks();
 }
 
 function openModal() {
