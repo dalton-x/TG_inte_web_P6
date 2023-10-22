@@ -14,6 +14,7 @@ function createNotification(message, type, callback = null) {
     });
 
     const cancelButton = document.getElementById('modal-close-button-cancel');
+    cancelButton.style.display = 'block';
     cancelButton.addEventListener('click', () => {
       closeNotification();
       callback(false);
