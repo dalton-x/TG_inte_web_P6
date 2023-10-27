@@ -3,14 +3,35 @@ async function fetchRequest(api, params = {}) {
   try {
     const { method = 'GET', body } = params;
     const token = sessionStorage.getItem('token');
-    const requestOptions = {
-      method: method,
-      body: body,
+    let requestOptions = {
+      mode: "cors",
+      cache: "no-cache",
+      credentials: "same-origin",
       headers: {
-        "Accept" : 'application/json', 
-        "Authorization" : `Bearer ${token}`
-      }
-    };
+        "Content-Type": "application/json",      
+      },
+      redirect: "follow",
+      referrerPolicy: "no-referrer",
+    }
+    if (token != null && token != undefined) {
+      requestOptions = {
+        // ... permet de prendre els propriete de mon objet et de rjouter ce que je souhaite ensuite
+        ...requestOptions,
+        method: method,
+        body: body,
+        headers: {
+          "Authorization" : `Bearer ${token}`
+        }
+      };
+    } else {
+      requestOptions = {
+        // ... permet de prendre els propriete de mon objet et de rjouter ce que je souhaite ensuite
+        ...requestOptions,
+        method: method,
+        body: body,
+      };
+    }
+
     const response = await fetch(URLDB + api , requestOptions);
     const data = await response.json();
     return data;

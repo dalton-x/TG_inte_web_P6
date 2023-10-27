@@ -10,9 +10,10 @@ submitButton.addEventListener("click", function(event) {
   let password = document.getElementById("password").value;
 
   let params = {
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({ 'email':email, 'password':password }),
     method: 'POST'
   }
+  console.log(params);
   getUserData(params)
 
 });
@@ -36,5 +37,4 @@ function generateErrorMessage(display) {
   } else {
     messageError.classList.add('display-none')
   }
-
 }
