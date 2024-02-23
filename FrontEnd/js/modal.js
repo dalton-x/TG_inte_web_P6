@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function btnAddImage() {
-  // Gestion ajout une nouvelle image
+  // Add a new image
   document.getElementById("btnAddImage").addEventListener("click", function() {
     document.getElementById("projets").style.display = "none";
     document.getElementById("ajoutProjet").style.display = "block";
@@ -59,7 +59,7 @@ function btnReturn() {
   openModalUpdate()
 }
 
-// Gestion de la miniature
+// Manage thumbnails
 function insertThumbnail(event){
   let file = event.target.files[0];
   const logo = document.getElementById('logo');
@@ -71,14 +71,14 @@ function insertThumbnail(event){
     'image/png'
   ]
 
-  // Vérifier si un fichier a été sélectionné
+  // Check if a file has been selected
   if (file) {
-    // Test si le fichier est autorisé
+    // Test if the file is authorized
     if (mimeType.includes(file.type)) {
-      // Créer un objet URL pour le fichier
+      // Create a URL object for the file
       const imageURL = URL.createObjectURL(file);
   
-      // Remplacer le logo par l'image temporaire
+      // Replace logo with temporary image
       logo.innerHTML = `<img src="${imageURL}" alt="Image téléchargée">`;
       inputUpload.style.display = 'none';
       typeMime.style.display = 'none';
@@ -89,8 +89,8 @@ function insertThumbnail(event){
   }
 }
 
-// Gestion de la moadl pour la mise a jour des projets
-// Pour fermer la modal
+// Manage moadl for project updates
+// Close modal
 function closeModal(){
   document.getElementById("modal-container").style.display = "none";
   document.body.style.overflow = "auto";
@@ -103,4 +103,18 @@ function closeModal(){
 function openModal() {
   document.getElementById("modal-container").style.display = "block";
   document.body.style.overflow = "hidden";
+}
+
+function deleteWorkById(idWork) {
+
+  openNotifications('Etes vous sûr de vouloir supprimer ce projet ?', 'info', async function(result) {
+    if (result) {
+      // OK button clicked
+      let params = {
+        method: 'DELETE',
+      }
+      await fetchRequest("works/"+idWork, params);
+      openModalUpdate()
+    }
+  });
 }

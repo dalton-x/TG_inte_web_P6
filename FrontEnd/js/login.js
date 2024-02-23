@@ -1,9 +1,6 @@
-// Sélectionnez le bouton par son ID
-let submitButton = document.getElementById("submitForm");
-
-// Ajoutez un gestionnaire d'événements pour le clic sur le bouton
-submitButton.addEventListener("click", function(event) {
-  // Empêche le comportement par défaut du formulaire (rechargement de la page)
+// Add an event handler for button clicks
+document.getElementById("submitForm").addEventListener("click", function(event) {
+  // Prevent default form behavior (page reload)
   event.preventDefault();
 
   let email = document.getElementById("email").value;
@@ -18,8 +15,9 @@ submitButton.addEventListener("click", function(event) {
 
 });
 
-
 async function getUserData(params) {
+  // If you are already connected, disconnect to regenerate a new token
+  sessionStorage.removeItem('token');
   let user = await fetchRequest("users/login",params)
   if (user.token != undefined) {
     sessionStorage.setItem('token', user.token);

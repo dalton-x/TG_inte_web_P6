@@ -1,11 +1,11 @@
-// Fonction pour créer une notification
+// Function to create a notification
 function createNotification(message, type, callback = null) {
-  // Créer l'élément de notification
+  // Create the notification element
   const notification = document.createElement('div');
   notification.className = `notification ${type}`;
   notification.innerHTML = message;
 
-  // Ajouter les boutons OK et Annuler uniquement si un rappel est fourni
+  // Add OK and Cancel buttons only if a reminder is provided
   if (callback != null) {
     const okButton = document.getElementById('modal-close-button-ok');
     okButton.addEventListener('click', () => {
@@ -20,7 +20,7 @@ function createNotification(message, type, callback = null) {
       callback(false);
     });
   }else{
-    // Cache le bouton annuler quand il y en as pas besoin
+    // Hide cancel button when not needed
     const cancelButton = document.getElementById('modal-close-button-cancel');
     cancelButton.style.display = 'none';
 
@@ -31,11 +31,11 @@ function createNotification(message, type, callback = null) {
     });
   }
 
-  // Ajouter la notification au conteneur
+  // Add notification to container
   const container = document.getElementById('notification-container');
   container.appendChild(notification);
 
-  // Supprimer la notification après quelques secondes si aucun rappel n'est fourni
+  // Delete the notification after a few seconds if no callback is provided
   if (callback == null) {
     setTimeout(() => {
       closeNotification();
@@ -44,14 +44,14 @@ function createNotification(message, type, callback = null) {
   }
 }
 
-// Ouvrir le modal
+// Open modal
 function openNotifications(message, type, callback) {
   createNotification(message, type, callback);
   const modal = document.getElementById('modal-notifications-container');
   modal.style.display = 'block';
 }
 
-// Fermer le modal
+// Close modal
 function closeNotification() {
   const modal = document.getElementById('modal-notifications-container');
   const container = document.getElementById('notification-container');

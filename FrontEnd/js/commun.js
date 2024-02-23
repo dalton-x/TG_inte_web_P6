@@ -3,6 +3,7 @@ async function fetchRequest(api, params = {}) {
   try {
     const { method = 'GET', body } = params;
     const token = sessionStorage.getItem('token');
+    // default option for fetch request
     let requestOptions = {
       mode: "cors",
       cache: "no-cache",
@@ -12,23 +13,17 @@ async function fetchRequest(api, params = {}) {
       },
       redirect: "follow",
       referrerPolicy: "no-referrer",
+      method: method,
+      body: body,
     }
+
+    // add token to headers if connected
     if (token != null && token != undefined) {
       requestOptions = {
-        // ... permet de prendre els propriete de mon objet et de rjouter ce que je souhaite ensuite
         ...requestOptions,
-        method: method,
-        body: body,
         headers: {
           "Authorization" : `Bearer ${token}`
         }
-      };
-    } else {
-      requestOptions = {
-        // ... permet de prendre els propriete de mon objet et de rjouter ce que je souhaite ensuite
-        ...requestOptions,
-        method: method,
-        body: body,
       };
     }
 
@@ -41,13 +36,13 @@ async function fetchRequest(api, params = {}) {
   }
 }
 
-// Permet un scroll smooth
+// Enables smooth scrolling
 function scrollToAnchor(event, anchorId) {
-  event.preventDefault(); // Empêche le comportement de lien par défaut
+  event.preventDefault(); // Prevent default link behavior
 
   const targetElement = document.getElementById(anchorId);
   const targetOffset = targetElement.offsetTop;
-  const duration = 800; // Durée de l'animation en millisecondes
+  const duration = 800; // Animation duration in milliseconds
   const startOffset = window.scrollY;
   const distance = targetOffset - startOffset;
   let startTime = null;
