@@ -125,6 +125,8 @@ function getUserLogged() {
   if (sessionStorage.getItem('token') != null) {
     const btnModifier = document.getElementById('modifier');
     btnModifier.classList.remove('display-none');
+    const barreEdition = document.getElementById('containerEdition');
+    barreEdition.classList.remove('display-none');
     btnModifier.addEventListener('click', function() {
       openModalUpdate()
       openModal()
