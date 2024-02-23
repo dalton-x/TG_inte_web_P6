@@ -1,9 +1,9 @@
-// Sélectionnez le bouton par son ID
+// Select the button by its ID
 let validateNewImageBtn = document.getElementById("btnValidate");
 
-// Ajoutez un gestionnaire d'événements pour le clic sur le bouton
+// Add an event handler for button clicks
 validateNewImageBtn.addEventListener("click", async function(event) {
-  // Empêche le comportement par défaut du formulaire (rechargement de la page)
+  // Prevent default form behavior (page reload)
   event.preventDefault();
 
   const fileInput = document.getElementById("upload").files[0];
@@ -44,7 +44,7 @@ validateNewImageBtn.addEventListener("click", async function(event) {
 
 async function setNewImage(params) {
   let token = sessionStorage.getItem('token');
-  if (token != null) { // on est connecté
+  if (token != null) { // we're connected
     return await fetchRequest("works/",params);
   } else {
     console.log('pas token');

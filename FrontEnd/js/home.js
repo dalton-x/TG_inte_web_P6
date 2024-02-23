@@ -1,4 +1,4 @@
-// Launch the function to display all projects when the page is loaded
+// Run the function to display all projects when the page is loaded
 document.addEventListener("DOMContentLoaded", function () {
   getUserLogged()
   getAllCategories();
@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function createWork(work){
 
-  // Create figure tag
+  // Create a figure tag
   document.querySelector("#portfolio .gallery").innerHTML = "";
   const figure = document.createElement("figure");
     
@@ -16,7 +16,7 @@ function createWork(work){
   img.src = work.imageUrl;
   img.alt = work.title;
 
-  // Create figcaption
+  // Create figure caption
   const figcaption = document.createElement("figcaption");
   figcaption.textContent = work.title;
 
@@ -30,20 +30,20 @@ function createWork(work){
 async function getAllWorks(idCategory = 0) {
   // API request to retrieve objects
   try {
-    // Retrieve the location for the gallery objects
+    // Retrieve location of gallery objects
     const gallery = document.querySelector("#portfolio .gallery");
     updateBadge(idCategory);
     
     gallery.innerHTML = "";
     const works = await fetchRequest("works/",{method:'GET'});
 
-    // Loop over the list of objects
+    // Loop over object list
     const elements = (idCategory === 0 ? works : works.filter((work) => work.category.id === idCategory))
     .map((work) => {
       return createWork(work);
     });
 
-    // Append all figures to the gallery
+    // Add all figures to gallery
     elements.forEach((element) => {
       gallery.appendChild(element);
     });
@@ -67,7 +67,7 @@ async function getAllCategories(select = false) {
   const filters = document.getElementById('filters');
   // Clear all filters
   filters.innerHTML = "";
-  // Create a badge for all and assign it id 0
+  // Create a badge for all and assign id 0
   const allBadges = document.createElement("div");
   allBadges.innerHTML = "Tous";
   allBadges.className = 'badge selected 0';
@@ -86,12 +86,12 @@ async function getAllCategories(select = false) {
       });
       return badge;
     });
-    // Add the Tous badge at the beginning of the list to put it first
+    // Add the All badge to the top of the list to place it first
     badges.unshift(allBadges);
 
     const works = await fetchRequest("works/",{method:'GET'});
   
-    // Add badges to filters element only if works in category
+    // Add badges to the filters element only if they work in the category
     badges.forEach((badge) => {
       const matchingWorks = works.filter((work) => {
         return badge.classList.contains(work.categoryId.toString()) || badge.classList.contains("0");
@@ -102,7 +102,7 @@ async function getAllCategories(select = false) {
       }
     });
   } else {
-    // Category management for the add new image selector
+    // Manage categories for the add image selector
     const selectNewImage = document.getElementById('category'); 
     const options = categories.map((category) => {
       const option = document.createElement("option");
@@ -113,7 +113,7 @@ async function getAllCategories(select = false) {
 
     // Add options to selectNewImage element
     options.forEach((option) => {
-      // Check if the value already exists
+      // Check if value already exists
       if (!selectNewImage.querySelector(`[value="${option.value}"]`)) {
         selectNewImage.appendChild(option);
       }
@@ -139,12 +139,12 @@ async function openModalUpdate() {
   works.map((work) => {
     const workItem = document.createElement("div");
     workItem.classList.add("grid-item");
-    // Create image tag
+    // Create an image tag
     const img = document.createElement("img");
     img.src = work.imageUrl;
     img.alt = work.title;
     workItem.appendChild(img);
-    // Create trash
+    // Creation of a recycle garbage can
     const trash = document.createElement("div");
     trash.classList.add("trash");
     trash.addEventListener('click', function() {
@@ -157,18 +157,4 @@ async function openModalUpdate() {
     workItem.appendChild(trash);
     projets.appendChild(workItem);
   })
-}
-
-function deleteWorkById(idWork) {
-
-  openNotifications('Etes vous sûr de vouloir supprimer ce projet ?', 'info', async function(result) {
-    if (result) {
-      // Le bouton OK a été cliqué
-      let params = {
-        method: 'DELETE',
-      }
-      await fetchRequest("works/"+idWork, params);
-      openModalUpdate()
-    }
-  });
 }
