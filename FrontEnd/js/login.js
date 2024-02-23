@@ -10,7 +10,6 @@ document.getElementById("submitForm").addEventListener("click", function(event) 
     body: JSON.stringify({ 'email':email, 'password':password }),
     method: 'POST'
   }
-  console.log(params);
   getUserData(params)
 
 });
