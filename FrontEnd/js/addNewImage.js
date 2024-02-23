@@ -24,7 +24,9 @@ validateNewImageBtn.addEventListener("click", async function(event) {
 
     let response = await setNewImage(params);
     if (response) {
-      openNotifications('Le projet "'+response.title+'" à bien étè ajouté', 'success')
+      openNotifications('Le projet "'+response.title+'" à bien étè ajouté', 'success');
+      const btnReturn = document.getElementById('btnReturn');
+      btnReturn.click();
     } else {
       openNotifications('Probleme sur l\'envoi du projet', 'error')
     }
