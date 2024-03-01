@@ -5,6 +5,14 @@ document.addEventListener("DOMContentLoaded", function () {
   getAllWorks(0);
 });
 
+
+/**
+ * From the work object
+ * DOM creation for image and text creation 
+ * for integration in gallery
+ * @param {object} work 
+ * @returns {DOM element}
+ */
 function createWork(work){
 
   // Create a figure tag
@@ -27,6 +35,13 @@ function createWork(work){
   return figure;
 }
 
+/**
+ * Retrieves all wokrks with API
+ * sort wokrks by idCategory
+ * use createWork(work) to generate element
+ * then add to gallery
+ * @param {int} idCategory 
+ */
 async function getAllWorks(idCategory = 0) {
   // API request to retrieve objects
   try {
@@ -52,6 +67,11 @@ async function getAllWorks(idCategory = 0) {
   }
 }
 
+/**
+ * This "updateBadge" function updates the badges in a user interface according to the category supplied as a parameter.
+ * @param {int} idCategory 
+ */
+
 function updateBadge(idCategory) {
   const badges = document.querySelectorAll('#filters .badge');
   [...badges].map((badge) => {
@@ -62,6 +82,12 @@ function updateBadge(idCategory) {
   });
 }
 
+
+/**
+ * Permet de récuperer toutes les categories via l'API
+ * Le parametre permet de savoir si on est dans un select pour l'ajout des projets ou sur la page d'acceuil
+ * @param {boolean} select 
+ */
 async function getAllCategories(select = false) {
   const categories = await fetchRequest("categories/",{method:'GET'});
   const filters = document.getElementById('filters');
