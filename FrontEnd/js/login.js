@@ -3,10 +3,10 @@ document.getElementById("submitForm").addEventListener("click", function(event) 
   // Prevent default form behavior (page reload)
   event.preventDefault();
 
-  let email = document.getElementById("email").value;
-  let password = document.getElementById("password").value;
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-  let params = {
+  const params = {
     body: JSON.stringify({ 'email':email, 'password':password }),
     method: 'POST'
   };
@@ -22,7 +22,7 @@ document.getElementById("submitForm").addEventListener("click", function(event) 
 async function getUserData(params) {
   // If you are already connected, disconnect to regenerate a new token
   sessionStorage.removeItem('token');
-  let user = await fetchRequest("users/login",params)
+  const user = await fetchRequest("users/login",params)
   if (user.token != undefined) {
     sessionStorage.setItem('token', user.token);
     location.href = './index.html';
