@@ -17,12 +17,12 @@ validateNewImageBtn.addEventListener("click", async function(event) {
     formData.append("category", category);
     formData.append("image", fileInput);
 
-    let params = {
+    const params = {
       body: formData,
       method: 'POST'
     };
 
-    let response = await setNewImage(params);
+    const response = await setNewImage(params);
     if (response) {
       openNotifications('Le projet "'+response.title+'" à bien étè ajouté', 'success');
       const btnReturn = document.getElementById('btnReturn');
@@ -31,13 +31,13 @@ validateNewImageBtn.addEventListener("click", async function(event) {
       openNotifications('Probleme sur l\'envoi du projet', 'error')
     }
   }else{
-    var errorForm = [];
-    (!fileInput)?errorForm.push('Image Manquante'):'';
+    let errorForm = [];
+    (!fileInput)?errorForm.push('Image manquante'):'';
     (!title)?errorForm.push('Titre manquant'):'';
     (!category)?errorForm.push('Categorie manquante'):'';
     let message = '<ul>';
-    errorForm.map((el) => {
-      message += '<li>'+ el + '</li>';
+    errorForm.forEach(error => {
+      message += '<li>'+ error + '</li>';
     });
     message += '</ul>'
     openNotifications(message, 'error')
@@ -48,7 +48,5 @@ async function setNewImage(params) {
   let token = sessionStorage.getItem('token');
   if (token != null) { // we're connected
     return await fetchRequest("works/",params);
-  } else {
-    console.log('pas token');
   }
 }
