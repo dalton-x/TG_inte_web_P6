@@ -1,16 +1,29 @@
-// Select the button by its ID
-let validateNewImageBtn = document.getElementById("btnValidate");
-
 // Add an event handler for button clicks
-validateNewImageBtn.addEventListener("click", async function(event) {
+document.getElementById("btnValidate").addEventListener("click", async function(event) {
   // Prevent default form behavior (page reload)
   event.preventDefault();
 
-  const fileInput = document.getElementById("upload").files[0];
-  const title = document.getElementById("title").value;
-  const category = document.getElementById("category").value;
+  function getDataSetNewImage() {
+    const fileInput = document.getElementById("upload").files[0];
+    const title = document.getElementById("title").value;
+    const category = document.getElementById("category").value;
+    
+    if (!fileInput || !title || !category) {
+      const errorForm = [];
+      (!fileInput) && errorForm.push('Image manquante');
+      (!title) && errorForm.push('Titre manquant');
+      (!category) && errorForm.push('Categorie manquante');
+      
+      if (errorForm.length > 0) {
+        const message = '<ul>' + errorForm.map(error => '<li>' + error + '</li>').join('') + '</ul>';
+        openNotifications(message, 'error');
+        return [];
+      }
+    }
+    return [fileInput, title, category];
+  }
 
-
+  let [fileInput,title,category] = getDataSetNewImage();
   if (fileInput && title && category) {
     const formData = new FormData();
     formData.append("title", title);
@@ -25,22 +38,10 @@ validateNewImageBtn.addEventListener("click", async function(event) {
     const response = await setNewImage(params);
     if (response) {
       openNotifications('Le projet "'+response.title+'" à bien étè ajouté', 'success');
-      const btnReturn = document.getElementById('btnReturn');
-      btnReturn.click();
+      document.getElementById('btnReturn').click();
     } else {
       openNotifications('Probleme sur l\'envoi du projet', 'error')
     }
-  }else{
-    let errorForm = [];
-    (!fileInput)?errorForm.push('Image manquante'):'';
-    (!title)?errorForm.push('Titre manquant'):'';
-    (!category)?errorForm.push('Categorie manquante'):'';
-    let message = '<ul>';
-    errorForm.forEach(error => {
-      message += '<li>'+ error + '</li>';
-    });
-    message += '</ul>'
-    openNotifications(message, 'error')
   }
 });
 

@@ -89,61 +89,64 @@ function updateBadge(idCategory) {
  * @param {boolean} select 
  */
 async function getAllCategories(select = false) {
-  const categories = await fetchRequest("categories/",{method:'GET'});
+  const categories = await fetchRequest("categories/", { method: 'GET' });
   const filters = document.getElementById('filters');
-  // Clear all filters
   filters.innerHTML = "";
-  // Create a badge for all and assign id 0
-  const allBadges = document.createElement("div");
-  allBadges.innerHTML = "Tous";
-  allBadges.className = 'badge selected 0';
-  allBadges.addEventListener('click', function() {
-    getAllWorks(0);
-  });
 
-  if (!select) {
-    // Create other badges according to the database
-    const badges = categories.map((category) => {
-      const badge = document.createElement("div");
-      badge.innerHTML = category.name;
-      badge.className = 'badge '+category.id;
-      badge.addEventListener('click', function() {
-        getAllWorks(category.id);
-      });
-      return badge;
-    });
-    // Add the All badge to the top of the list to place it first
-    badges.unshift(allBadges);
+  // Internal function to manage the click on a badge
+  function handleBadgeClick(categoryId) {
+    getAllWorks(categoryId);
+  }
 
-    const works = await fetchRequest("works/",{method:'GET'});
-  
-    // Add badges to the filters element only if they work in the category
-    badges.forEach((badge) => {
-      const matchingWorks = works.filter((work) => {
-        return badge.classList.contains(work.categoryId.toString()) || badge.classList.contains("0");
-      });
-    
-      if (matchingWorks.length > 0) {
-        filters.appendChild(badge);
-      }
-    });
-  } else {
-    // Manage categories for the add image selector
-    const selectNewImage = document.getElementById('category'); 
-    const options = categories.map((category) => {
+  // Internal function to create a badge
+  function createBadge(category) {
+    const badge = document.createElement("div");
+    badge.innerHTML = category.name;
+    badge.className = 'badge ' + category.id;
+    badge.addEventListener('click', () => handleBadgeClick(category.id));
+    return badge;
+  }
+
+  // Internal function to filter jobs by category
+  function filterWorksByCategory(badge, works) {
+    return works.filter(work => badge.classList.contains(work.categoryId.toString()) || badge.classList.contains("0"));
+  }
+
+  // Internal function to add an item to the image selector
+  function addOptionToImageSelector(category) {
+    const selectNewImage = document.getElementById('category');
+    const existingOption = selectNewImage.querySelector(`[value="${category.id}"]`);
+
+    if (!existingOption) {
       const option = document.createElement("option");
       option.value = category.id;
       option.text = category.name;
-      return option;
-    });
+      selectNewImage.appendChild(option);
+    }
+  }
 
-    // Add options to selectNewImage element
-    options.forEach((option) => {
-      // Check if value already exists
-      if (!selectNewImage.querySelector(`[value="${option.value}"]`)) {
-        selectNewImage.appendChild(option);
-      }
-    });
+  // Create "Tous" badge
+  const allBadge = createBadge({ id: 0, name: "Tous" });
+  allBadge.addEventListener('click', () => handleBadgeClick(0));
+
+  if (!select) {
+    const works = await fetchRequest("works/", { method: 'GET' });
+
+    // Filter categories to add only those with matching jobs
+    const badges = categories
+      .map(createBadge)
+      .filter(badge => {
+        const matchingWorks = filterWorksByCategory(badge, works);
+        return matchingWorks.length > 0;
+      });
+
+    badges.unshift(allBadge);
+
+    // Add filtered badges to filters element
+    badges.forEach(badge => filters.appendChild(badge));
+  } else {
+    // Add options to image selector
+    categories.forEach(addOptionToImageSelector);
   }
 }
 

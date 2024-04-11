@@ -1,4 +1,5 @@
 // Function to create a notification
+let idSetTimeout = 0;
 function createNotification(message, type, callback = null) {
   // Create the notification element
   const notification = document.createElement('div');
@@ -7,8 +8,7 @@ function createNotification(message, type, callback = null) {
 
   // Add OK and Cancel buttons only if a reminder is provided
   if (callback != null) {
-    const okButton = document.getElementById('modal-close-button-ok');
-    okButton.addEventListener('click', () => {
+    document.getElementById('modal-close-button-ok').addEventListener('click', () => {
       closeNotification();
       callback(true);
     });
@@ -24,8 +24,7 @@ function createNotification(message, type, callback = null) {
     const cancelButton = document.getElementById('modal-close-button-cancel');
     cancelButton.style.display = 'none';
 
-    const okButton = document.getElementById('modal-close-button-ok');
-    okButton.addEventListener('click', () => {
+    document.getElementById('modal-close-button-ok').addEventListener('click', () => {
       closeNotification();
       callback(true);
     });
@@ -37,7 +36,7 @@ function createNotification(message, type, callback = null) {
 
   // Delete the notification after a few seconds if no callback is provided
   if (callback == null) {
-    setTimeout(() => {
+    idSetTimeout = setTimeout(() => {
       closeNotification();
       (container.innerText != '') ? container.removeChild(notification) : '';
     }, 3000);
@@ -57,4 +56,5 @@ function closeNotification() {
   const container = document.getElementById('notification-container');
   container.innerHTML = '';
   modal.style.display = 'none';
+  clearTimeout(idSetTimeout);
 }

@@ -38,11 +38,11 @@ async function fetchRequest(api, params = {}) {
 
 // Enables smooth scrolling
 function scrollToAnchor(event, anchorId) {
-  event.preventDefault(); // Prevent default link behavior
+  event.preventDefault();
 
   const targetElement = document.getElementById(anchorId);
   const targetOffset = targetElement.offsetTop;
-  const duration = 800; // Animation duration in milliseconds
+  const duration = 800;
   const startOffset = window.scrollY;
   const distance = targetOffset - startOffset;
   let startTime = null;
